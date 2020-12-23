@@ -1,41 +1,38 @@
 const express = require('express');
 const app = express();
+const exphbs = require('express-handlebars');
 const PORT = process.env.PORT || 5000;
 const path = require('path');
-const members=require('./Members')
-const moment = require('moment')
+const loggger = require ('./middleware/logger');
 
-// function keyword instead of arrow function
-// app.get('/', function(req, res){
-//     res.send('hello world');
-// });
+const members = require('./Members')
 
-//staticly send a file
-// not very sueful , but here it anyway
-// app.get('/', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'public', 'index.html'));
-// });
+//middleware here - my custom
+//app.use(logger);
 
 
-// create a middleware function
-logger = (req, res, next) =>{
-    console.log(`${req.protocol}:${req.get('host')}${req.originalUrl}: ${moment().format()}`);
-    next();
-}
+// middle war handlebars
+app.engine('handlebars', exphbs({ defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
-app.use(logger);
 
-app.get('/api/members', (req,res) =>{
-    res.json(members);
-});
-//or could have written it this way, no curly vbraces needed
-app.get('/api/members2', (req,res) => res.json(members));
+//middleware here - body parser
+app.use(express.json());
+//middleware here - form submissions url encoded
+app.use(express.urlencoded({extended: false}));
 
+//homepage routs
+app.get('/', (req, res) => res.render('index',{
+    title: "Member App",
+    members
+}));
 
 
 //set a static folder
 app.use(express.static(path.join(__dirname,'public')));
 
 
+//members api route
+app.use('/api/members', require('./routes/api/members'));
 
 app.listen(5000, () => console.log(`Server started on port ${PORT}`));

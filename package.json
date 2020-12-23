@@ -1,0 +1,28 @@
+{
+  "name": "express-crash-traversy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "starthw": "node server-hello-world/index-hello-world",
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philipwalsh/express-crash-traversy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/philipwalsh/express-crash-traversy/issues"
+  },
+  "homepage": "https://github.com/philipwalsh/express-crash-traversy#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
